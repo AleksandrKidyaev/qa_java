@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="com.example.LionTest" time="0" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="com.example.LionTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.2.1"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -59,10 +59,7 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.example.LionTest" name="lionDoesHaveManeParameterizedTest[0]" time="0"/>
-  <testcase classname="com.example.LionTest" name="lionGetFoodTest[0]" time="0"/>
-  <testcase classname="com.example.LionTest" name="lionGetKittensTest[0]" time="0"/>
-  <testcase classname="com.example.LionTest" name="lionDoesHaveManeParameterizedTest[1]" time="0"/>
-  <testcase classname="com.example.LionTest" name="lionGetFoodTest[1]" time="0"/>
-  <testcase classname="com.example.LionTest" name="lionGetKittensTest[1]" time="0"/>
+  <testcase classname="com.example.LionTest" name="lionSexExceptionMessageHaveCorrectTextTest" time="0"/>
+  <testcase classname="com.example.LionTest" name="lionGetKittensWillReturnOneTest" time="0"/>
+  <testcase classname="com.example.LionTest" name="lionGetFoodWillReturnMeatListTest" time="0"/>
 </testsuite>

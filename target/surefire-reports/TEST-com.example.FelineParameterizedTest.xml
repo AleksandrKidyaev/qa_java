@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.example.CatTest" time="0.575" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="com.example.FelineParameterizedTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.2.1"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -59,6 +59,10 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.example.CatTest" name="catGetFoodWillReturnMeatListTest" time="0.575"/>
-  <testcase classname="com.example.CatTest" name="catGetSoundWillReturnMyauTest" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[0]" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[1]" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[2]" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[3]" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[4]" time="0"/>
+  <testcase classname="com.example.FelineParameterizedTest" name="felineGetKittensCompareReturnKittensCountWithParametersTest[5]" time="0"/>
 </testsuite>

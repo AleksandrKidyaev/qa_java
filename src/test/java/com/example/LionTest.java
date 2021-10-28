@@ -1,77 +1,75 @@
 package com.example;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 import static org.junit.Assert.*;
 
-@RunWith(Parameterized.class)
+@RunWith(MockitoJUnitRunner.class)
 public class LionTest {
 
-    Feline feline = new Feline();
-
-    Lion lion;
-    /*
-    Тут объект сделан заранее и с фиксированным полом,
-    чтобы не создавать его потом два раза для двух оставшихся методов, не использующих параметризацию.
-    Рассматривал и другой вариант: внутри теста lionGetFoodTest создать объект с одним полом,
-    а внутри теста lionGetKittensTest создать объект с другим полом.
-    Но не увидел в этом смысла в конкретной текущей ситуации.
-     */
+    Feline testFeline = new Feline();
+    Lion testLion;
     {
         try {
-            lion = new Lion(feline, "Самец");
-        } catch (Exception e) {
-            e.printStackTrace();
+            testLion = new Lion(testFeline, "Самка");
+        } catch (Exception lionSexException) {
+            lionSexException.printStackTrace();
         }
     }
 
-    private final String checkedSex;
-    private final boolean expectedManeOutcome;
 
-    public LionTest(String checkedSex, boolean expectedManeOutcome) {
-        this.checkedSex = checkedSex;
-        this.expectedManeOutcome = expectedManeOutcome;
-    }
-
-    @Parameterized.Parameters
-    public static Object[][] getSexAndExpectedManeData() {
-        return new Object[][] {
-                {"Самец", true},
-                {"Самка", false},
-        };
+    @Test
+    public void lionGetKittensWillReturnOneTest() {
+            int actualKittensCount = testLion.getKittens();
+            int expectedKittensCount = 1;
+            assertEquals(expectedKittensCount, actualKittensCount);
     }
 
     @Test
-    public void lionGetKittensTest() {
-        int actual = lion.getKittens();
-        int expected = 1;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void lionDoesHaveManeParameterizedTest() {
+    public void lionGetFoodWillReturnMeatListTest() {
         try {
-            Lion parameterizedLion = new Lion(feline, checkedSex);
-            //А тут уже использовал новый объяект, т.к. lion не подошел бы из-за зафиксированного пола.
-            boolean actual = parameterizedLion.doesHaveMane();
-            assertEquals(expectedManeOutcome, actual);
+            List<String> actualFoodReturn = testLion.getFood();
+            List<String> expectedFoodReturn = List.of("Животные", "Птицы", "Рыба");
+            assertEquals(expectedFoodReturn, actualFoodReturn);
         }
-        catch (Exception e) {
-            Assert.fail("Exception " + e);
+        catch (Exception animalFoodException) {
+            Assert.fail("Exception " + animalFoodException);
         }
     }
 
+    @Mock
+    Feline mockFeline;
+    //Использовал мок, т.к. исключению не важен null в первом параметре
     @Test
-    public void lionGetFoodTest() {
+    public void lionSexExceptionMessageHaveCorrectTextTest() {
         try {
-            List<String> actual = lion.getFood();
-            List<String> expected = List.of("Животные", "Птицы", "Рыба");
-            assertEquals(expected, actual);
+            Lion lionWithIncorrectSex = new Lion(mockFeline, "Некорректный пол");
         }
-        catch (Exception e) {
-            Assert.fail("Exception " + e);
+        catch (Exception lionSexException) {
+            String actualExceptionText = lionSexException.getMessage();
+            String expectedExceptionText = "Используйте допустимые значения пола животного - самец или самка";
+            assertEquals(expectedExceptionText, actualExceptionText);
         }
     }
+
+    /*
+    Другой вариант проверки исключения был такой:
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+    @Test
+    public void whenExceptionThrown_thenRuleIsApplied() throws Exception {
+        Feline f = new Feline();
+        exceptionRule.expect(Exception.class);
+        exceptionRule.expectMessage("Используйте допустимые значения пола животного - самец или самка");
+        Lion l = new Lion(testFeline, "Некорректный тест");
+    }
+
+    Он тоже отрабатывал успешно. Но у ExpectedException.none(); - "none" зачеркивает, устаревший.
+    Поэтому показался этот вариант не "красивым".
+     */
 }

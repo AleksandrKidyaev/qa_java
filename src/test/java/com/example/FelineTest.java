@@ -1,45 +1,24 @@
 package com.example;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import java.util.List;
 import static org.junit.Assert.*;
 
-@RunWith(Parameterized.class)
 public class FelineTest {
 
-    Feline feline = new Feline();
+    Feline testFeline;
     /*
-    Объект feline сделал тут, т.к. он используется везде аналогично,
-    в данной ситуации нет смысла создавать отдельно в каждом тесте
-     */
-    private final int checkedNumber;
-    private final int expectedNumber;
-
-    public FelineTest(int checkedNumber, int expectedNumber) {
-        this.checkedNumber = checkedNumber;
-        this.expectedNumber = expectedNumber;
-    }
-
-    @Parameterized.Parameters
-    public static Object[][] getNumberData() {
-        return new Object[][] {
-                {1, 1},
-                {1, 1},
-                {2, 2},
-                {7, 7},
-                {34, 34},
-                {569, 569},
-        };
-    }
+    Рассматривал также вариант сразу тут написать Feline testFeline = new Feline();, ведь объект для всех тестов
+    используется одинаковый и не изменяется. Таким образом сделал в не параметризированном тесте на Льва.
+    */
 
     @Test
-    public void felineEatMeatTest() {
+    public void felineEatMeatWillReturnMeatListTest() {
+        testFeline = new Feline();
         try {
-            List<String> actual = feline.eatMeat();
-            List<String> expected = List.of("Животные", "Птицы", "Рыба");
-            assertEquals(expected, actual);
+            List<String> actualFoodReturn = testFeline.eatMeat();
+            List<String> expectedFoodReturn = List.of("Животные", "Птицы", "Рыба");
+            assertEquals(expectedFoodReturn, actualFoodReturn);
         }
         catch (Exception e) {
             Assert.fail("Exception " + e);
@@ -47,23 +26,23 @@ public class FelineTest {
     }
 
     @Test
-    public void felineGetFamilyTest() {
-        String actual = feline.getFamily();
-        String expected = "Кошачьи";
-        assertEquals(expected, actual);
+    public void felineGetFamilyWillReturnFelineTest() {
+        testFeline = new Feline();
+        String actualFamilyReturn = testFeline.getFamily();
+        String expectedFamilyReturn = "Кошачьи";
+        assertEquals(expectedFamilyReturn, actualFamilyReturn);
     }
 
     @Test
-    public void felineGetKittensWithoutArgumentTest() {
-        //Этот тест отдельно, чтобы проверить, что без аргументов метод getKittens() действительно вернет "1".
-        int actual = feline.getKittens();
-        int expected = 1;
-        assertEquals(expected, actual);
+    public void felineGetKittensWithoutArgumentWillReturnOneTest() {
+        /*
+        Этот тест отдельно, от того, что в классе FelineParameterizedTest,
+        чтобы проверить, что без аргументов метод getKittens() действительно вернет "1".
+        */
+        testFeline = new Feline();
+        int actualKittensCOunt = testFeline.getKittens();
+        int expectedKittensCount = 1;
+        assertEquals(expectedKittensCount, actualKittensCOunt);
     }
 
-    @Test
-    public void felineGetKittensWithParameters() {
-        int actual = feline.getKittens(checkedNumber);
-        assertEquals(expectedNumber, actual);
-    }
 }

@@ -1,44 +1,51 @@
 package com.example;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CatTest {
 
-    Feline feline = new Feline();
-    Cat cat = new Cat(feline);
+    @Mock
+    Feline mockFeline;
 
-    @Test
-    public void catGetSoundTest() {
-        String actualSound = cat.getSound();
-        assertEquals("Мяу", actualSound);
-        //Делал намеренно по разному в разных тестах. Где-то сразу в ассерте ожидаемый, где-то сначала объявил переменную с ним.
+    @Test //Использовал мок, т.к. параметр конструктора кошки никак не повлияет на результат метода getFood
+    public void catGetSoundWillReturnMyauTest() {
+        Cat testCatWithMock = new Cat(mockFeline);
+        String actualCatSound = testCatWithMock.getSound();
+        String expectedCatSound = "Мяу";
+        assertEquals(expectedCatSound, actualCatSound);
+
     }
 
     @Test
-    public void catGetFoodTest() {
-        //Также, вместо try catch, тут (как и в других тестах на методы с исключениями) возможен вариант public void getFoodTest() throws Exception {
-        //Он бы тоже сработал.
+    public void catGetFoodWillReturnMeatListTest() {
+        Feline testFeline = new Feline();
+        //А тут, соответственно, мок использовать нельзя, т.к. predator получится null и метод не выполнится
+        Cat testCat = new Cat(testFeline);
+        /*
+        Также, вместо try catch, тут (как и в других тестах на методы (или конструкторы) с исключениями)
+        рассматривал вариант public void getFoodTest() throws Exception {
+        Он бы тоже сработал.
+         */
         try {
-            List<String> actualFoodReturn = cat.getFood();
-            //List<String> notExpected = List.of("Трава", "Различные растения");
+            List<String> actualFoodReturn = testCat.getFood();
             List<String> expectedFoodReturn = List.of("Животные", "Птицы", "Рыба");
             assertEquals(expectedFoodReturn, actualFoodReturn);
-            //assertNotEquals(notExpected, actual);
-            //Закомментированные строки в блоке try - рассматривал вариант добавить и их плюсом к тому что есть, но это было бы избыточно.
         }
-        catch (Exception e) {
-            Assert.fail("Exception " + e);
+        catch (Exception animalFoodException) {
+            Assert.fail("Exception " + animalFoodException);
         }
         /*
         Также для catch я рассматривал вариант:
         catch (Exception e) {
         e.printStackTrace();
         }
-        Он бы тоже работал. В некоторых следующих тестах использовал этот вариант.
+        Он бы тоже работал.
          */
-
     }
 }
